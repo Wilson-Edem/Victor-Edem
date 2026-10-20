@@ -1,10 +1,31 @@
+const TZ = "Africa/Lagos";
+
+function lagosParts(date) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: TZ,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(date);
+  const map = {};
+  parts.forEach((p) => { map[p.type] = p.value; });
+  const day = `${map.year}-${map.month}-${map.day}`;
+  const time = `${day} ${map.hour}:${map.minute}:${map.second}`;
+  const secondsSinceMidnight = Number(map.hour) * 3600 + Number(map.minute) * 60 + Number(map.second);
+  return { day, time, secondsUntilMidnight: 86400 - secondsSinceMidnight };
+}
+
 function esc(value) {
   return String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
 function visitHtml(info) {
   const rows = [
-    ["Date and time (UTC)", info.time],
+    ["Date and time (Lagos, WAT)", info.time],
     ["Visitor", "Guest"],
     ["Page", info.page],
     ["IP address", info.ip],
@@ -20,7 +41,7 @@ function visitHtml(info) {
 <div style="font-size:20px;font-weight:700;margin-top:6px;">Someone visited your portfolio today</div>
 </td></tr>
 <tr><td><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rows}</table></td></tr>
-<tr><td style="padding:16px 28px;color:#6b7280;font-size:12px;">Sent once per visitor per day.</td></tr>
+<tr><td style="padding:16px 28px;color:#6b7280;font-size:12px;">Sent once per visitor per day (Lagos time).</td></tr>
 </table>
 </td></tr>
 </table>
@@ -28,11 +49,13 @@ function visitHtml(info) {
 }
 
 module.exports = async function handler(req, res) {
-  const today = new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const lagos = lagosParts(now);
+
   const cookie = req.headers.cookie || "";
   const match = /(?:^|;\s*)pv_day=([^;]+)/.exec(cookie);
 
-  if (match && match[1] === today) {
+  if (match && match[1] === lagos.day) {
     res.statusCode = 204;
     return res.end();
   }
@@ -40,7 +63,7 @@ module.exports = async function handler(req, res) {
   const vercelIp = String(req.headers["x-vercel-forwarded-for"] || "").split(",")[0].trim();
   const forwarded = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim();
   const info = {
-    time: new Date().toISOString().replace("T", " ").slice(0, 19),
+    time: lagos.time,
     page: String(new URL(req.url, "https://site.local").searchParams.get("page") || "/").slice(0, 200),
     ip: vercelIp || forwarded || (req.socket && req.socket.remoteAddress) || "unknown",
     ua: String(req.headers["user-agent"] || "unknown").slice(0, 300),
@@ -59,14 +82,15 @@ module.exports = async function handler(req, res) {
         body: JSON.stringify({
           sender: { name: "Portfolio Visits", email: sender },
           to: [{ email: receiver, name: "Victor Edem" }],
-          subject: `Portfolio visit: ${info.time} UTC`,
+          subject: `Portfolio visit: ${info.time} WAT`,
           htmlContent: visitHtml(info)
         })
       });
     } catch (e) {}
   }
 
-  res.setHeader("Set-Cookie", `pv_day=${today}; Path=/; Max-Age=86400; SameSite=Lax; Secure; HttpOnly`);
+  const maxAge = Math.max(60, lagos.secondsUntilMidnight);
+  res.setHeader("Set-Cookie", `pv_day=${lagos.day}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure; HttpOnly`);
   res.statusCode = 204;
   res.end();
 };
