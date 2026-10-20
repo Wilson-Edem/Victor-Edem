@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Victor Edem | Frontend & Full-Stack Developer</title>
+    <meta name="description" content="Victor Edem is a frontend and full-stack web developer building fast, clean web apps and interactive products.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Victor Edem | Frontend & Full-Stack Developer">
+    <meta property="og:description" content="Fast, clean web apps and interactive products by Victor Edem.">
+    <meta property="og:image" content="assets/share-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { sans: ["Inter", "sans-serif"] }, colors: { dark: "#07080d", "dark-card": "#11141e", light: "#f6f7fb", "light-card": "#ffffff" } } } }</script>
+    <script src="https://unpkg.com/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="bg-light dark:bg-dark text-slate-800 dark:text-gray-200 font-sans antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-300">
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <a href="#projects" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[90] focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">Skip to projects</a>
+
+    <nav id="navbar" class="glass-nav fixed top-0 w-full z-50">
+        <div class="max-w-6xl mx-auto px-5 md:px-6 h-20 flex items-center justify-between">
+            <a href="#home" class="text-xl md:text-2xl font-bold gradient-text tracking-tight">VICTOR EDEM</a>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link text-sm font-medium text-slate-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Home</a>
+                <a href="#projects" class="nav-link text-sm font-medium text-slate-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Projects</a>
+                <a href="#about" class="nav-link text-sm font-medium text-slate-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">About</a>
+                <a href="#skills" class="nav-link text-sm font-medium text-slate-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Skills</a>
+                <button class="theme-toggle btn-soft p-2 rounded-full hover:bg-slate-200/60 dark:hover:bg-white/10 text-slate-600 dark:text-gray-400" type="button" aria-label="Toggle dark mode">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                </button>
+                <a href="#contact" class="btn-soft px-5 py-2.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 shadow-lg shadow-indigo-500/20">Hire Me</a>
+            </div>
+
+            <div class="flex items-center gap-3 md:hidden">
+                <button class="theme-toggle p-2 rounded-full text-slate-600 dark:text-gray-400" type="button" aria-label="Toggle dark mode">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                </button>
+                <button id="mobile-menu-btn" class="p-1 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white" type="button" aria-label="Open menu" aria-expanded="false">
+                    <i data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200/60 dark:border-white/5 bg-light/95 dark:bg-dark/95">
+            <div class="px-5 py-4 space-y-4 flex flex-col">
+                <a href="#home" class="text-lg font-medium text-slate-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Home</a>
+                <a href="#projects" class="text-lg font-medium text-slate-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Projects</a>
+                <a href="#about" class="text-lg font-medium text-slate-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">About</a>
+                <a href="#skills" class="text-lg font-medium text-slate-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Skills</a>
+                <a href="#contact" class="text-lg font-medium text-slate-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-min pt-28 md:pt-32 pb-16 px-5 md:px-6 max-w-6xl mx-auto flex flex-col justify-center relative overflow-hidden">
+        <div class="absolute top-20 right-0 w-72 md:w-96 h-72 md:h-96 bg-indigo-600/5 dark:bg-indigo-600/10 rounded-full blur-3xl -z-10"></div>
+        <div class="absolute bottom-20 left-0 w-60 md:w-72 h-60 md:h-72 bg-purple-600/5 dark:bg-purple-600/10 rounded-full blur-3xl -z-10"></div>
+        <div class="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
+            <div class="space-y-6 md:space-y-8 order-2 md:order-1">
+                <div class="rise">
+                    <div class="inline-block px-4 py-1.5 rounded-full text-indigo-600 dark:text-indigo-400 text-sm font-medium glass">
+                        Frontend &amp; Full-Stack Developer
+                    </div>
+                </div>
+                <h1 class="rise d1 text-4xl sm:text-5xl md:text-7xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
+                    Hi, I'm <br />
+                    <span class="gradient-text"><span data-typed="Victor Edem"></span><span class="caret">|</span></span>
+                </h1>
+                <p class="rise d2 max-w-xl text-base md:text-lg text-slate-600 dark:text-gray-400 leading-relaxed border-l-2 border-indigo-500/50 pl-5 md:pl-6">
+                    I build fast, clean web apps and interactive products, from polished frontend design to full-stack backend.
+                </p>
+                <div class="rise d3 flex flex-wrap gap-3 md:gap-4 pt-2">
+                    <a href="#projects" class="btn-soft group px-6 md:px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl font-bold hover:bg-slate-800 dark:hover:bg-gray-200 flex items-center gap-2">
+                        View Work <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                    <a href="#contact" class="btn-soft px-6 md:px-8 py-3 text-slate-900 dark:text-white rounded-xl font-bold glass hover:opacity-90">
+                        Contact Me
+                    </a>
+                </div>
+                <div class="rise d4 flex flex-wrap items-center gap-5 md:gap-6 text-slate-400 dark:text-gray-400 pt-2">
+                    <a href="https://github.com/Wilson-Edem" target="_blank" rel="noopener" aria-label="GitHub" class="hover:text-indigo-600 dark:hover:text-white transition-colors"><i data-lucide="github"></i></a>
+                    <a href="https://www.linkedin.com/in/victor-edem-a7b985340" target="_blank" rel="noopener" aria-label="LinkedIn" class="hover:text-indigo-600 dark:hover:text-white transition-colors"><i data-lucide="linkedin"></i></a>
+                    <a href="#contact" aria-label="Contact" class="hover:text-indigo-600 dark:hover:text-white transition-colors"><i data-lucide="message-circle"></i></a>
+                    <span class="flex items-center gap-2 text-sm"><i data-lucide="clock" class="w-4 h-4"></i> Replies within 24 hours</span>
+                </div>
+            </div>
+
+            <div class="rise d2 order-1 md:order-2 relative mx-auto">
+                <div class="relative z-10 w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-600 to-purple-500 rounded-full blur-2xl opacity-10 dark:opacity-20"></div>
+                    <img src="assets/victor-photo.jpg" alt="Victor Edem" width="320" height="320"
+                         class="rounded-full w-full h-full object-cover border-4 border-white dark:border-white/10 shadow-2xl relative z-10 bg-slate-200 dark:bg-[#1a1a1a]">
+                    <div class="glass-strong absolute -top-3 -right-2 sm:-top-4 sm:-right-4 p-3 sm:p-4 rounded-2xl shadow-xl flex items-center gap-3 z-20">
+                        <div class="p-2 bg-blue-500/15 rounded-lg text-blue-500 dark:text-blue-400">
+                            <i data-lucide="code-2" class="w-5 h-5"></i>
+                        </div>
+                        <div class="hidden sm:block">
+                            <div class="text-xs text-slate-500 dark:text-gray-400">Specialty</div>
+                            <div class="font-bold text-slate-900 dark:text-white">Web Development</div>
+                        </div>
+                    </div>
+                    <div class="glass-strong absolute -bottom-3 -left-2 sm:-bottom-4 sm:-left-4 p-3 sm:p-4 rounded-2xl shadow-xl flex items-center gap-3 z-20">
+                        <div class="p-2 bg-purple-500/15 rounded-lg text-purple-500 dark:text-purple-400">
+                            <i data-lucide="palette" class="w-5 h-5"></i>
+                        </div>
+                        <div class="hidden sm:block">
+                            <div class="text-xs text-slate-500 dark:text-gray-400">Focus</div>
+                            <div class="font-bold text-slate-900 dark:text-white">UI/UX &amp; Full-Stack</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="px-5 md:px-6 max-w-6xl mx-auto -mt-4 md:-mt-6 relative z-10">
+        <div class="grid grid-cols-3 gap-3 md:gap-6">
+            <div class="reveal glass rounded-2xl p-4 md:p-5 text-center">
+                <div class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white" data-count="years">0</div>
+                <div class="text-xs md:text-sm text-slate-500 dark:text-gray-400 mt-1">Years Coding</div>
+            </div>
+            <div class="reveal glass rounded-2xl p-4 md:p-5 text-center" style="--delay:.1s">
+                <div class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white"><span data-count="15" data-suffix="+">0</span></div>
+                <div class="text-xs md:text-sm text-slate-500 dark:text-gray-400 mt-1">Projects</div>
+            </div>
+            <div class="reveal glass rounded-2xl p-4 md:p-5 text-center" style="--delay:.2s">
+                <div class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">24h</div>
+                <div class="text-xs md:text-sm text-slate-500 dark:text-gray-400 mt-1">Reply Time</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 md:py-24 px-5 md:px-6 max-w-6xl mx-auto">
+        <div class="reveal mb-10">
+            <h2 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-3">Portfolio</h2>
+            <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">Featured Projects</h3>
+            <p class="text-slate-600 dark:text-gray-400 max-w-2xl text-base md:text-lg">
+                A curated selection of projects showcasing thoughtful design, solid frontend architecture, and focused product features.
+            </p>
+        </div>
+        <div class="reveal flex flex-wrap gap-2 mb-10" role="group" aria-label="Filter projects">
+            <button class="filter-btn active" data-filter="All" type="button">All</button>
+            <button class="filter-btn" data-filter="Web" type="button">Web</button>
+            <button class="filter-btn" data-filter="Mobile" type="button">Mobile</button>
+            <button class="filter-btn" data-filter="Games" type="button">Games</button>
+            <button class="filter-btn" data-filter="Maps" type="button">Maps</button>
+            <button class="filter-btn" data-filter="AI" type="button">AI</button>
+            <button class="filter-btn" data-filter="3D" type="button">3D</button>
+        </div>
+        <div id="project-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8"></div>
+        <div class="reveal flex justify-center mt-12">
+            <button id="see-all" class="btn-soft inline-flex items-center gap-2 px-7 py-3 rounded-xl font-bold glass text-slate-900 dark:text-white hover:opacity-90" type="button" aria-expanded="false" aria-controls="project-grid">
+                <span id="see-all-label">See all projects</span> <i id="see-all-icon" data-lucide="chevron-down" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 md:py-24 px-5 md:px-6 bg-slate-50/60 dark:bg-[#0c0e16]">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-10 md:gap-12">
+            <div class="md:col-span-5 relative">
+                <div class="md:sticky md:top-28">
+                    <img src="assets/victor-photo.jpg" alt="Victor Edem" width="480" height="560"
+                         class="reveal photo-soft rounded-3xl shadow-2xl w-full max-w-xs sm:max-w-sm mx-auto md:mx-0 border border-white/60 dark:border-white/5 bg-slate-200 dark:bg-[#1a1a1a] object-cover">
+                    <div class="mt-8 grid grid-cols-2 gap-4 max-w-sm mx-auto md:mx-0">
+                        <div class="reveal glass p-4 rounded-xl text-center">
+                            <div class="text-2xl font-bold text-slate-900 dark:text-white mb-1" data-count="years">0</div>
+                            <div class="text-sm text-slate-500 dark:text-gray-500">Years Coding</div>
+                        </div>
+                        <div class="reveal glass p-4 rounded-xl text-center" style="--delay:.1s">
+                            <div class="text-2xl font-bold text-slate-900 dark:text-white mb-1"><span data-count="15" data-suffix="+">0</span></div>
+                            <div class="text-sm text-slate-500 dark:text-gray-500">Projects</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:col-span-7 space-y-8">
+                <div class="reveal">
+                    <h2 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-3">About Me</h2>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-6">Building Clean, Working Web Products</h3>
+                </div>
+                <div class="reveal text-slate-600 dark:text-gray-400 leading-relaxed space-y-4">
+                    <p>I'm <span class="text-slate-900 dark:text-white font-medium">Victor Edem</span>, a frontend and full-stack developer. I build web applications that are easy to use, fast to load, and straightforward to maintain, from the interface people see to the backend that powers it.</p>
+                    <p>I'm most at home with JavaScript and React, and I work with Firebase, Node.js, and Express for backend features. I also build interactive experiences with Three.js and Phaser.js, and I've taught myself 3D animation in Blender.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div class="reveal glass flex items-center gap-3 p-4 rounded-xl">
+                        <i data-lucide="layout" class="text-indigo-600 dark:text-indigo-400 w-6 h-6 shrink-0"></i>
+                        <div>
+                            <h4 class="text-slate-900 dark:text-white font-bold">Frontend</h4>
+                            <p class="text-xs text-slate-500 dark:text-gray-500">React, UI/UX, Design Systems</p>
+                        </div>
+                    </div>
+                    <div class="reveal glass flex items-center gap-3 p-4 rounded-xl" style="--delay:.08s">
+                        <i data-lucide="database" class="text-indigo-600 dark:text-indigo-400 w-6 h-6 shrink-0"></i>
+                        <div>
+                            <h4 class="text-slate-900 dark:text-white font-bold">Backend</h4>
+                            <p class="text-xs text-slate-500 dark:text-gray-500">Node.js, Firebase, API Design</p>
+                        </div>
+                    </div>
+                    <div class="reveal glass flex items-center gap-3 p-4 rounded-xl" style="--delay:.16s">
+                        <i data-lucide="cpu" class="text-indigo-600 dark:text-indigo-400 w-6 h-6 shrink-0"></i>
+                        <div>
+                            <h4 class="text-slate-900 dark:text-white font-bold">Core</h4>
+                            <p class="text-xs text-slate-500 dark:text-gray-500">C++, C#, Algorithms, Performance</p>
+                        </div>
+                    </div>
+                    <div class="reveal glass flex items-center gap-3 p-4 rounded-xl" style="--delay:.24s">
+                        <i data-lucide="smartphone" class="text-indigo-600 dark:text-indigo-400 w-6 h-6 shrink-0"></i>
+                        <div>
+                            <h4 class="text-slate-900 dark:text-white font-bold">Mobile</h4>
+                            <p class="text-xs text-slate-500 dark:text-gray-500">React Native, Expo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <a href="assets/victor-cv.pdf" download class="btn-soft inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold glass text-slate-900 dark:text-white hover:opacity-90">
+                        <i data-lucide="download" class="w-4 h-4"></i> Download CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 md:py-24 px-5 md:px-6 max-w-6xl mx-auto">
+        <div class="reveal glass rounded-3xl p-6 sm:p-8 md:p-12 relative overflow-hidden">
+            <div class="mb-8 md:mb-10">
+                <h2 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-3">Tech Stack</h2>
+                <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Tools &amp; Technologies</h3>
+            </div>
+            <div class="flex flex-wrap gap-2 sm:gap-3">
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">HTML</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">CSS</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">JavaScript</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">React.js</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">React Native</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">Node.js</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">Firebase</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">MongoDB</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">Three.js</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">Phaser.js</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">Leaflet</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">C++</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">C#</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">Git</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">Figma</span>
+                <span class="skill-pill rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 font-medium glass text-slate-700 dark:text-gray-300">Blender</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 md:py-24 px-5 md:px-6 max-w-4xl mx-auto">
+        <div class="reveal text-center mb-10 md:mb-12">
+            <h2 class="text-indigo-600 dark:text-indigo-400 font-bold tracking-wide uppercase mb-3">Contact</h2>
+            <h3 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-5 md:mb-6">Let's Build Something Great</h3>
+            <p class="text-slate-600 dark:text-gray-400 text-base md:text-lg">Open for freelance, contract, and collaborative projects. I reply within 24 hours.</p>
+        </div>
+        <div class="reveal glass-strong p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl">
+            <form id="contact-form" class="space-y-5 md:space-y-6" novalidate>
+                <div class="grid md:grid-cols-2 gap-5 md:gap-6">
+                    <div class="space-y-2">
+                        <label for="c-name" class="text-sm font-medium text-slate-600 dark:text-gray-400">Name</label>
+                        <input id="c-name" name="name" type="text" required minlength="2" maxlength="80" autocomplete="name" placeholder="John Doe"
+                               class="w-full bg-white/60 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="c-email" class="text-sm font-medium text-slate-600 dark:text-gray-400">Email</label>
+                        <input id="c-email" name="email" type="email" required maxlength="120" autocomplete="email" placeholder="john@example.com"
+                               class="w-full bg-white/60 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label for="c-message" class="text-sm font-medium text-slate-600 dark:text-gray-400">Message</label>
+                    <textarea id="c-message" name="message" rows="5" required minlength="10" maxlength="2000" placeholder="Tell me about your project..."
+                              class="w-full bg-white/60 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors resize-y"></textarea>
+                </div>
+                <div class="hidden" aria-hidden="true">
+                    <label for="c-company">Company</label>
+                    <input id="c-company" name="company" type="text" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <button id="contact-submit" type="submit" class="btn-soft px-8 py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-500/20 disabled:opacity-60">Send Message</button>
+                    <p id="form-status" role="status" aria-live="polite" class="text-sm min-h-[1.25rem]"></p>
+                </div>
+            </form>
+        </div>
+        <div class="reveal flex flex-wrap items-center justify-center gap-4 mt-10">
+            <a href="tel:+2348068264316" class="contact-icon" aria-label="Call +234 806 826 4316" title="Call"><i data-lucide="phone"></i></a>
+            <a href="mailto:edsonedem2121@gmail.com" class="contact-icon" aria-label="Email edsonedem2121@gmail.com" title="Email"><i data-lucide="mail"></i></a>
+            <a href="https://wa.me/2348068264316" target="_blank" rel="noopener" class="contact-icon" aria-label="WhatsApp" title="WhatsApp"><span class="brand brand-whatsapp" aria-hidden="true"></span></a>
+            <a href="https://discord.com/users/1548072084108873820" target="_blank" rel="noopener" class="contact-icon" aria-label="Discord" title="Discord"><span class="brand brand-discord" aria-hidden="true"></span></a>
+            <a href="https://www.linkedin.com/in/victor-edem-a7b985340" target="_blank" rel="noopener" class="contact-icon" aria-label="LinkedIn" title="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="https://github.com/Wilson-Edem" target="_blank" rel="noopener" class="contact-icon" aria-label="GitHub" title="GitHub"><i data-lucide="github"></i></a>
+        </div>
+    </section>
+
+    <footer class="border-t border-slate-200/70 dark:border-white/5 py-10">
+        <div class="max-w-6xl mx-auto px-5 md:px-6 flex flex-col md:flex-row gap-4 justify-between items-center text-center md:text-left text-sm text-slate-500 dark:text-gray-500">
+            <p>&copy; <span id="year"></span> Victor Edem. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="privacy.html" class="hover:text-indigo-600 dark:hover:text-white transition-colors">Privacy</a>
+                <a href="#home" class="hover:text-indigo-600 dark:hover:text-white transition-colors">Back to top</a>
+            </div>
+            <p>Built with HTML, CSS, and JavaScript</p>
+        </div>
+    </footer>
+
+    <a id="mobile-cta" href="#contact" class="sticky-cta md:hidden hidden fixed right-4 bottom-4 z-40 px-5 py-3 rounded-full bg-indigo-600 text-white font-semibold shadow-lg shadow-indigo-500/30">Hire me</a>
+
+    <div id="theme-prompt" class="prompt fixed left-1/2 bottom-5 z-[60] w-[min(420px,92vw)] glass-strong rounded-2xl p-5 shadow-2xl" role="dialog" aria-labelledby="tp-title">
+        <p id="tp-title" class="font-semibold text-slate-900 dark:text-white mb-4">Would you like to view this site in light mode?</p>
+        <div class="flex flex-wrap gap-3">
+            <button id="tp-light" class="btn-soft px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700" type="button">Switch to light</button>
+            <button id="tp-dark" class="btn-soft px-4 py-2 rounded-lg glass text-slate-900 dark:text-white text-sm font-semibold hover:opacity-90" type="button">Stay in dark</button>
+        </div>
+    </div>
+
+    <dialog id="project-dialog" class="project-dialog" aria-labelledby="pd-title">
+        <button id="dialog-close" class="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center" type="button" aria-label="Close project"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <div id="project-dialog-body" class="dialog-scroll"></div>
+    </dialog>
+
+    <script src="js/projects.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/visit.js" defer></script>
+</body>
+</html>

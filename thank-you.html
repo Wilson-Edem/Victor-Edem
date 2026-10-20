@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Thank You | Victor Edem</title>
+    <meta name="description" content="Message sent.">
+    <link rel="icon" href="assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { sans: ["Inter", "sans-serif"] }, colors: { dark: "#07080d", "dark-card": "#11141e", light: "#f6f7fb", "light-card": "#ffffff" } } } }</script>
+    <script src="https://unpkg.com/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="bg-light dark:bg-dark text-slate-800 dark:text-gray-200 font-sans antialiased min-h-screen transition-colors duration-300">
+    <nav class="glass-nav fixed top-0 w-full z-50">
+        <div class="max-w-6xl mx-auto px-5 md:px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-xl md:text-2xl font-bold gradient-text tracking-tight">VICTOR EDEM</a>
+            <button class="theme-toggle p-2 rounded-full text-slate-600 dark:text-gray-400 glass" type="button" aria-label="Toggle dark mode">
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </nav>
+    <main class="max-w-2xl mx-auto px-5 md:px-6 pt-36 md:pt-40 pb-24 text-center">
+        <div class="inline-flex p-4 rounded-full glass text-indigo-600 dark:text-indigo-400 mb-6"><i data-lucide="check" class="w-8 h-8"></i></div>
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Message sent</h1>
+        <p class="text-slate-600 dark:text-gray-400 mb-8">Thank you for reaching out. I reply within 24 hours.</p>
+        <a href="index.html" class="inline-flex px-8 py-3 rounded-xl font-bold bg-indigo-600 text-white hover:bg-indigo-700">Back to home</a>
+    </main>
+    <script src="js/theme-only.js"></script>
+    <script src="js/visit.js"></script>
+    <script>document.addEventListener("DOMContentLoaded",function(){if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+
+<html lang="en" class="scroll-smooth dark">
+
+<head>
+ <link href="/css/go.css" rel="stylesheet">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analysis Dashboard Project</title>
+
+    
+
+    <!-- Tailwind CSS -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    
+
+    <!-- Lucide Icons -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    
+
+    <!-- Chart.js for Graphs -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    
+
+    <!-- Google Fonts -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+    <script>
+
+        tailwind.config = {
+
+            darkMode: 'class',
+
+            theme: {
+
+                extend: {
+
+                    fontFamily: {
+
+                        sans: ['Inter', 'sans-serif'],
+
+                    },
+
+                    colors: {
+
+                        // Professional Palette
+
+                        dark: '#0e1728',         // Near-black dark background
+
+                        'dark-card': '#1f2937',  // Dark slate card
+
+                        light: '#f8fafc',        // Light background
+
+                        'light-card': '#ffffff', // White card
+
+                        primary: '#4f46e5',      // Strong Indigo
+
+                        primaryLighter: '#818cf8', // Light Indigo for accents
+
+                        primaryBg: '#eef2ff',    // Very light indigo background
+
+                    },
+
+                    animation: {
+
+                        'fade-in': 'fadeIn 0.5s ease-out',
+
+                    },
+
+                    keyframes: {
+
+                        fadeIn: {
+
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+
+
+    <style>
+
+        /* Custom Scrollbar for Aesthetics */
+
+        ::-webkit-scrollbar {
+
+            width: 8px;
+
+            height: 8px;
+
+        }
+
+        ::-webkit-scrollbar-track {
+
+            background: transparent;
+
+        }
+
+        ::-webkit-scrollbar-thumb {
+
+            background: #94a3b8;
+
+            border-radius: 4px;
+
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+
+            background: #475569;
+
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background: #4f46e5;
+
+        }
+
+        
+
+        /* Ensure Textareas Scroll Properly */
+
+        textarea {
+
+            overflow-y: auto;
+
+        }
+
+
+
+        /* Chart Container Sizing */
+
+        .chart-container {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 250px; /* Base height for small screens */
+
+        }
+
+        @media (min-width: 768px) {
+
+            .chart-container {
+
+                height: 300px; /* Taller on tablets/desktops */
+
+            }
+
+        }
+.portfolio-fixed-trigger {
+    /* The "Secret Sauce" for consistent placement */
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999; /* Ensures it stays above all other elements */
+
+    /* Aesthetic Design */
+    display: flex;
+    align-items: center;
+    background: #007bff; /* Primary Blue */
+    color: #ffffff !important;
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 2px solid transparent;
+}
+
+.btn-icon {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover & Interaction */
+.portfolio-fixed-trigger:hover {
+    transform: translateY(-5px);
+    background: #0056b3;
+    box-shadow: 0 15px 25px rgba(0, 123, 255, 0.4);
+}
+
+.portfolio-fixed-trigger:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+.portfolio-fixed-trigger:active {
+    transform: translateY(-2px);
+}
+
+/* Optional Pulse Animation to grab attention */
+@keyframes buttonPulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(0, 123, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+}
+
+.portfolio-fixed-trigger {
+    animation: buttonPulse 2s infinite;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .portfolio-fixed-trigger {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+
+
+    </style>
+
+</head>
+
+<body class="bg-light dark:bg-dark text-slate-800 dark:text-gray-200 font-sans transition-colors duration-500">
+
+
+
+    <!-- WELCOME MODAL (Initial State) -->
+
+    <div id="welcomeModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-dark/70 backdrop-blur-sm p-4">
+
+        <div class="bg-white dark:bg-dark-card w-full max-w-md p-8 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 animate-fade-in relative">
+
+            
+
+            <div class="relative z-10">
+
+                <div class="flex justify-center mb-6">
+
+                    <div class="p-3 bg-primaryBg dark:bg-primary/20 rounded-xl text-primary">
+
+                        <i data-lucide="line-chart" class="w-8 h-8"></i>
+
+                    </div>
+
+                </div>
+
+                
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2 text-center">Initialize Analysis Session</h2>
+
+                <p class="text-center text-slate-500 dark:text-gray-400 mb-8 text-sm">Define your scope to begin using the strategic analysis tools.</p>
+
+                
+
+                <form id="welcomeForm" onsubmit="event.preventDefault(); startDashboard();" class="space-y-5">
+
+                    <div>
+
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 ml-1">Analyst Name</label>
+
+                        <input type="text" id="userNameInput" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary transition-all" placeholder="e.g. Dana Scully">
+
+                    </div>
+
+                    <div>
+
+    <a href="/index.html" target="_blank" class="portfolio-fixed-trigger">
+    <span class="btn-text">Go to Portfolio</span>
+    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+</a>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 ml-1">Project/Subject Title</label>
+
+                        <input type="text" id="projectNameInput" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary transition-all" placeholder="e.g. Q4 Growth Strategy">
+
+                    </div>
+
+                    
+
+                    <button type="submit" class="w-full py-3 bg-primary hover:bg-indigo-700 text-white rounded-lg font-semibold transition-all shadow-md shadow-primary/30 active:scale-[0.98] flex items-center justify-center gap-2">
+
+                        Start Dashboard <i data-lucide="trending-up" class="w-4 h-4"></i>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- MAIN DASHBOARD LAYOUT -->
+
+    <div class="flex h-screen overflow-hidden">
+
+        
+
+        <!-- Sidebar Navigation -->
+
+        <aside class="hidden lg:flex flex-col w-64 bg-white dark:bg-dark-card border-r border-slate-200 dark:border-slate-800 transition-colors duration-300 z-20 shadow-xl">
+
+            <div class="h-20 flex items-center px-6 border-b border-slate-100 dark:border-slate-700">
+
+                <a href="#" class="flex items-center gap-2 font-bold text-xl text-slate-900 dark:text-white">
+
+                    <div class="p-1.5 bg-primary rounded-lg text-white">
+
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+
+                    </div>
+
+                    Vhite<span class="text-primary">Analysis</span>
+
+                </a>
+
+            </div>
+
+
+
+            <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1">
+
+                <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Navigation</p>
+
+                <a href="#" onclick="scrollToSection('overview')" class="flex items-center gap-3 px-4 py-3 bg-primaryBg dark:bg-primary/10 text-primary dark:text-primaryLighter rounded-lg font-medium transition-colors">
+
+                    <i data-lucide="layout-grid" class="w-5 h-5"></i> Overview
+
+                </a>
+
+                <a href="#" onclick="scrollToSection('swot')" class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg font-medium transition-colors">
+
+                    <i data-lucide="shield-alert" class="w-5 h-5"></i> SWOT Analysis
+
+                </a>
+
+                <a href="#" onclick="scrollToSection('data-console')" class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg font-medium transition-colors">
+
+                    <i data-lucide="database" class="w-5 h-5"></i> Input Data
+
+                </a>
+
+            </div>
+
+
+
+            <!-- User Profile -->
+
+            <div class="p-4 space-y-4 border-t border-slate-200 dark:border-slate-800">
+
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700">
+
+                    <div class="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary font-bold sidebar-initials text-lg">A</div>
+
+                    <div class="overflow-hidden">
+
+                        <p class="text-sm font-semibold text-slate-900 dark:text-white truncate sidebar-username">Analyst</p>
+
+                        <p class="text-xs text-slate-500 dark:text-gray-400">Active Session</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+              <!-- User Profile -->
+
+            <a href="index.html" class="p-4 space-y-4 border-t border-slate-200 dark:border-slate-800">
+
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700">
+
+                    <i class="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary font-bold sidebar-initials text-lg" data-lucide="arrow-left-circle"></i>
+
+                    <div class="overflow-hidden">
+
+                        <p class="text-xs text-slate-500 dark:text-gray-400">Admin. Victor Edem (Portfolio)</p>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        </aside>
+
+
+
+        <!-- Main Content Area -->
+
+        <div class="flex-1 flex flex-col h-screen overflow-hidden relative">
+
+            
+
+            <!-- Header -->
+
+            <header class="h-20 bg-white dark:bg-dark-card border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 z-10 transition-colors duration-300 shadow-sm">
+
+                <div class="flex items-center gap-4">
+
+                    <button id="mobile-menu-btn" class="lg:hidden p-2 text-slate-600 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+
+                    </button>
+
+                    <div>
+
+                        <h1 class="text-xl font-bold text-slate-900 dark:text-white project-title-display">Project Title</h1>
+
+                        <p class="text-xs text-slate-500 dark:text-gray-400">Interactive Analysis Dashboard</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="flex items-center gap-4">
+
+                    <!-- Theme Toggle -->
+
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-yellow-400 transition-colors">
+
+                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+
+                        <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+
+                    </button>
+
+                    <div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
+
+                    <span class="text-sm font-semibold text-primary dark:text-primaryLighter hidden sm:block sidebar-username">Analyst</span>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- Scrollable Content -->
+
+            <main class="flex-1 overflow-y-auto p-4 md:p-8 relative scroll-smooth">
+
+                
+
+                <!-- Section 1: Executive Summary / Overview (KPIs) -->
+
+                <div id="overview" class="mb-12 animate-fade-in">
+
+                    <div class="mb-8">
+
+                        <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">
+
+                            <span class="project-title-display text-primary"></span> Overview
+
+                        </h2>
+
+                        <p class="text-slate-500 dark:text-gray-400 mt-2 max-w-2xl text-sm">
+
+                            Welcome, <span class="welcome-username font-semibold">Analyst</span>. This dashboard provides a structured environment to assess the viability, risks, and opportunities of your subject.
+
+                        </p>
+
+                    </div>
+
+
+
+ <div class="hidden dark:inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/20 text-red-400 rounded-full font-festive text-lg animate-pulse-slow">
+
+                            <i data-lucide="gift" class="w-4 h-4"></i> Season's Greetings
+
+                        </div>
+
+                    
+
+
+
+
+
+                    <!-- KPI Cards (General) -->
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                        <!-- Card 1: Viability Score -->
+
+                        <div class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-lg hover:shadow-xl transition-shadow duration-300">
+
+                            <div class="flex justify-between items-center mb-4">
+
+                                <span class="text-xs font-semibold px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded-full">VIABILITY</span>
+
+                                <i data-lucide="activity" class="w-6 h-6 text-green-500/50"></i>
+
+                            </div>
+
+                            <h3 class="text-slate-500 dark:text-gray-400 text-sm font-medium">Viability Score</h3>
+
+                            <p class="text-3xl font-bold text-slate-900 dark:text-white mt-1">--- / 100</p>
+
+                        </div>
+
+                        <!-- Card 2: Key Strengths -->
+
+                        <div class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-lg hover:shadow-xl transition-shadow duration-300">
+
+                            <div class="flex justify-between items-center mb-4">
+
+                                <span class="text-xs font-semibold px-3 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded-full">INTERNAL UP</span>
+
+                                <i data-lucide="shield" class="w-6 h-6 text-blue-500/50"></i>
+
+                            </div>
+
+                            <h3 class="text-slate-500 dark:text-gray-400 text-sm font-medium">Strength Items</h3>
+
+                            <p id="strength-count" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">0</p>
+
+                        </div>
+
+                        <!-- Card 3: Opportunities -->
+
+                        <div class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-lg hover:shadow-xl transition-shadow duration-300">
+
+                            <div class="flex justify-between items-center mb-4">
+
+                                <span class="text-xs font-semibold px-3 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded-full">EXTERNAL UP</span>
+
+                                <i data-lucide="lightbulb" class="w-6 h-6 text-purple-500/50"></i>
+
+                            </div>
+
+                            <h3 class="text-slate-500 dark:text-gray-400 text-sm font-medium">Opportunity Items</h3>
+
+                            <p id="opportunity-count" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">0</p>
+
+                        </div>
+
+                        <!-- Card 4: Threats -->
+
+                        <div class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-lg hover:shadow-xl transition-shadow duration-300">
+
+                            <div class="flex justify-between items-center mb-4">
+
+                                <span class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400 rounded-full">RISK ITEMS</span>
+
+                                <i data-lucide="alert-triangle" class="w-6 h-6 text-red-500/50"></i>
+
+                            </div>
+
+                            <h3 class="text-slate-500 dark:text-gray-400 text-sm font-medium">Threat Items</h3>
+
+                            <p id="threat-count" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">0</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Section 2: SWOT Analysis (Visual & Text Input) -->
+
+                <div id="swot" class="mb-12 animate-fade-in">
+
+                    <div class="flex items-center justify-between mb-6">
+
+                        <div>
+
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white">SWOT Framework Analysis</h3>
+
+                            <p class="text-sm text-slate-500 dark:text-gray-400">Input your analysis points (one item per line) and visualize the balance.</p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                        
+
+                        <!-- SWOT Quadrants (2x2 Grid) -->
+
+                        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                            <!-- Strengths -->
+
+                            <div class="bg-white dark:bg-dark-card p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md flex flex-col hover:border-blue-300 transition-colors duration-300">
+
+                                <div class="flex items-center gap-2 mb-3 text-blue-600 dark:text-blue-400 font-bold">
+
+                                    <i data-lucide="thumbs-up" class="w-5 h-5"></i> Strengths
+
+                                </div>
+
+                                <textarea id="swot-strengths-input" rows="8" placeholder="Enter core competencies and assets..." 
+
+                                    class="w-full flex-grow bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-3 text-slate-800 dark:text-gray-200 outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm resize-none"></textarea>
+
+                            </div>
+
+
+
+                            <!-- Weaknesses -->
+
+                            <div class="bg-white dark:bg-dark-card p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md flex flex-col hover:border-red-300 transition-colors duration-300">
+
+                                <div class="flex items-center gap-2 mb-3 text-red-600 dark:text-red-400 font-bold">
+
+                                    <i data-lucide="thumbs-down" class="w-5 h-5"></i> Weaknesses
+
+                                </div>
+
+                                <textarea id="swot-weaknesses-input" rows="8" placeholder="Enter liabilities and internal limitations..." 
+
+                                    class="w-full flex-grow bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-3 text-slate-800 dark:text-gray-200 outline-none focus:ring-2 focus:ring-red-500 transition-all text-sm resize-none"></textarea>
+
+                            </div>
+
+
+
+                            <!-- Opportunities -->
+
+                            <div class="bg-white dark:bg-dark-card p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md flex flex-col hover:border-purple-300 transition-colors duration-300">
+
+                                <div class="flex items-center gap-2 mb-3 text-purple-600 dark:text-purple-400 font-bold">
+
+                                    <i data-lucide="trending-up" class="w-5 h-5"></i> Opportunities
+
+                                </div>
+
+                                <textarea id="swot-opportunities-input" rows="8" placeholder="Enter market trends and external advantages..." 
+
+                                    class="w-full flex-grow bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-3 text-slate-800 dark:text-gray-200 outline-none focus:ring-2 focus:ring-purple-500 transition-all text-sm resize-none"></textarea>
+
+                            </div>
+
+
+
+                            <!-- Threats -->
+
+                            <div class="bg-white dark:bg-dark-card p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md flex flex-col hover:border-amber-300 transition-colors duration-300">
+
+                                <div class="flex items-center gap-2 mb-3 text-amber-600 dark:text-amber-400 font-bold">
+
+                                    <i data-lucide="alert-octagon" class="w-5 h-5"></i> Threats
+
+                                </div>
+
+                                <textarea id="swot-threats-input" rows="8" placeholder="Enter risks, competitors, and regulatory challenges..." 
+
+                                    class="w-full flex-grow bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-3 text-slate-800 dark:text-gray-200 outline-none focus:ring-2 focus:ring-amber-500 transition-all text-sm resize-none"></textarea>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- SWOT Radar Chart & Control -->
+
+                        <div class="lg:col-span-1 bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md flex flex-col">
+
+                            <h4 class="font-bold text-lg text-slate-800 dark:text-white mb-4 text-center border-b border-slate-100 dark:border-slate-700 pb-3">Analysis Balance (Radar)</h4>
+
+                            <div class="chart-container flex justify-center flex-grow mb-6">
+
+                                <canvas id="swotChart"></canvas>
+
+                            </div>
+
+                            <button onclick="recalculateSwotChart()" class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-primary hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold transition-all shadow-md shadow-primary/30 active:scale-[0.98]">
+
+                                <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Visualize Balance
+
+                            </button>
+
+                            <p class="text-xs text-center text-slate-400 mt-3">
+
+                                Chart size reflects the relative count of items in each quadrant.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Section 3: Data Console (Interactive Visualization Tool) -->
+
+                <div id="data-console" class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-lg animate-fade-in">
+
+                    <div class="flex items-center gap-3 mb-6 border-b border-slate-100 dark:border-slate-700 pb-4">
+
+                        <div class="p-2 bg-primary/10 dark:bg-primary/20 rounded-lg text-primary">
+
+                            <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3 class="font-bold text-xl text-slate-900 dark:text-white">Data Console</h3>
+
+                            <p class="text-xs text-slate-500">Visualize custom comparative metrics using Chart.js.</p>
+
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+                        <!-- Input Area -->
+
+                        <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                            <div>
+
+                                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-2">
+
+                                    <i data-lucide="tag" class="w-3 h-3 text-slate-400"></i> Categories / Labels (one per line)
+
+                                </label>
+
+                                <textarea id="labelsInput" rows="6" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-3 text-slate-700 dark:text-gray-200 outline-none focus:ring-2 focus:ring-primary font-mono text-sm resize-none" placeholder="Efficiency&#10;Scalability&#10;Risk Profile"></textarea>
+
+                            </div>
+
+
+
+                            <div>
+
+                                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-2">
+
+                                    <i data-lucide="hash" class="w-3 h-3 text-slate-400"></i> Scores (1-100, one per line)
+
+                                </label>
+
+                                <textarea id="valuesInput" rows="6" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-3 text-slate-700 dark:text-gray-200 outline-none focus:ring-2 focus:ring-primary font-mono text-sm resize-none" placeholder="85&#10;40&#10;60"></textarea>
+
+                            </div>
+
+                        </div>
+
+                        
+
+                        <!-- Controls -->
+
+                        <div class="md:col-span-4 space-y-4">
+
+                            <div>
+
+                                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Analysis Type</label>
+
+                                <select id="analysisType" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2.5 text-slate-700 dark:text-gray-200 outline-none focus:ring-2 focus:ring-primary transition-all text-sm">
+
+                                    <option value="bar">Bar Chart (Comparison)</option>
+
+                                    <option value="pie">Pie Chart (Distribution)</option>
+
+                                    <option value="radar">Radar Chart (Assessment)</option>
+
+                                </select>
+
+                            </div>
+
+                            <button onclick="processData()" class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-primary hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold transition-all shadow-md shadow-primary/30 active:scale-[0.98]">
+
+                                <i data-lucide="bar-chart-3" class="w-4 h-4"></i> Generate Graph
+
+                            </button>
+
+                            <button onclick="clearData()" class="w-full flex justify-center items-center gap-2 px-4 py-2.5 border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg text-sm font-semibold transition-all">
+
+                                <i data-lucide="trash-2" class="w-4 h-4"></i> Clear Data
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Dynamic Chart Output -->
+
+                    <div class="mt-8 bg-slate-50 dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700 shadow-inner">
+
+                        <h4 id="dynamicChartTitle" class="text-sm font-bold text-slate-700 dark:text-white mb-4 text-center">Analysis Output</h4>
+
+                        <div class="chart-container flex justify-center">
+
+                            <canvas id="dynamicChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="h-16"></div>
+
+            </main>
+
+        </div>
+
+
+
+        <!-- Mobile Sidebar / Overlay -->
+
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden transition-opacity duration-300 opacity-0" onclick="toggleSidebar()"></div>
+
+        <div id="mobile-sidebar" class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-dark-card transform -translate-x-full transition-transform duration-300 z-40 lg:hidden flex flex-col border-r border-slate-200 dark:border-slate-800 shadow-xl">
+
+            <div class="h-20 flex items-center justify-between px-6 border-b border-slate-100 dark:border-slate-700">
+
+                <span class="font-bold text-xl text-slate-900 dark:text-white">Menu</span>
+
+                <button id="close-sidebar" onclick="toggleSidebar()" class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg"><i data-lucide="x" class="w-6 h-6"></i></button>
+
+            </div>
+
+            <div class="flex-1 p-4 space-y-1">
+
+                <a href="#" onclick="scrollToSection('overview')" class="block px-4 py-3 text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg">Overview</a>
+
+                <a href="#" onclick="scrollToSection('swot')" class="block px-4 py-3 text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg">SWOT Framework</a>
+
+                <a href="#" onclick="scrollToSection('data-console')" class="block px-4 py-3 bg-primaryBg dark:bg-primary/10 text-primary dark:text-primaryLighter rounded-lg font-medium">Data Console</a>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <script>
+
+        // Initialize Lucide Icons
+
+        lucide.createIcons();
+
+
+
+        // Theme Toggle Logic
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+
+        const htmlElement = document.documentElement;
+
+
+
+        // Check local storage or system preference
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+
+            htmlElement.classList.add('dark');
+
+        } else {
+
+            htmlElement.classList.remove('dark');
+
+        }
+
+
+
+        themeToggleBtn.addEventListener('click', () => {
+
+            htmlElement.classList.toggle('dark');
+
+            localStorage.theme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+
+            updateAllChartsTheme(); // Update charts to match new theme
+
+        });
+
+
+
+        // Mobile Sidebar Logic
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+
+
+        function toggleSidebar() {
+
+            mobileSidebar.classList.toggle('-translate-x-full');
+
+            
+
+            if (mobileSidebar.classList.contains('-translate-x-full')) {
+
+                sidebarOverlay.classList.add('opacity-0', 'hidden');
+
+            } else {
+
+                sidebarOverlay.classList.remove('hidden');
+
+                setTimeout(() => sidebarOverlay.classList.remove('opacity-0'), 10);
+
+            }
+
+        }
+
+
+
+        mobileMenuBtn.addEventListener('click', toggleSidebar);
+
+
+
+        // Scroll Logic
+
+        function scrollToSection(id) {
+
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+
+            // Close mobile sidebar if open
+
+            if (!mobileSidebar.classList.contains('-translate-x-full')) {
+
+                toggleSidebar();
+
+            }
+
+        }
+
+
+
+        // Welcome Modal and Personalization
+
+        function startDashboard() {
+
+            const userName = document.getElementById('userNameInput').value.trim();
+
+            const projectName = document.getElementById('projectNameInput').value.trim();
+
+            
+
+            if(userName && projectName) {
+
+                applyPersonalization(userName, projectName);
+
+                const modal = document.getElementById('welcomeModal');
+
+                // Use CSS classes to fade out and hide the modal
+
+                modal.classList.add('opacity-0', 'pointer-events-none', 'transition-opacity', 'duration-500');
+
+                setTimeout(() => modal.remove(), 500);
+
+            }
+
+        }
+
+
+
+        function applyPersonalization(name, project) {
+
+            document.querySelectorAll('.welcome-username').forEach(el => el.textContent = name);
+
+            document.querySelectorAll('.sidebar-username').forEach(el => el.textContent = name);
+
+            document.querySelectorAll('.sidebar-initials').forEach(el => el.textContent = name.charAt(0).toUpperCase());
+
+            document.querySelectorAll('.project-title-display').forEach(el => el.textContent = project);
+
+        }
+
+
+
+        let swotChartInstance = null;
+
+        let dynamicChartInstance = null;
+
+
+
+        // Utility function to get chart colors based on theme
+
+        function getChartColors(isDark) {
+
+            return {
+
+                grid: isDark ? '#334155' : '#e2e8f0', // Slate 700 / Slate 200
+
+                text: isDark ? '#94a3b8' : '#64748b', // Slate 400 / Slate 500
+
+                primary: '#4f46e5', // Strong Indigo
+
+                primaryBg: isDark ? 'rgba(79, 70, 229, 0.2)' : 'rgba(79, 70, 229, 0.5)',
+
+                // Specific SWOT colors (used for borders, fill, and text labels)
+
+                strength: isDark ? 'rgba(56, 189, 248, 0.6)' : 'rgba(56, 189, 248, 0.8)', // Sky 500
+
+                weakness: isDark ? 'rgba(248, 113, 113, 0.6)' : 'rgba(248, 113, 113, 0.8)', // Red 400
+
+                opportunity: isDark ? 'rgba(168, 85, 247, 0.6)' : 'rgba(168, 85, 247, 0.8)', // Purple 400
+
+                threat: isDark ? 'rgba(251, 191, 36, 0.6)' : 'rgba(251, 191, 36, 0.8)', // Amber 400
+
+            };
+
+        }
+
+
+
+        // --- SWOT CHART LOGIC ---
+
+
+
+        function calculateSwotScores() {
+
+            // Function to count non-empty lines in a textarea
+
+            const countItems = (id) => {
+
+                const text = document.getElementById(id).value.trim();
+
+                if (!text) return 0;
+
+                // Split by newline and filter out empty strings
+
+                return text.split('\n').filter(line => line.trim() !== '').length;
+
+            };
+
+
+
+            const strengths = countItems('swot-strengths-input');
+
+            const weaknesses = countItems('swot-weaknesses-input');
+
+            const opportunities = countItems('swot-opportunities-input');
+
+            const threats = countItems('swot-threats-input');
+
+
+
+            // Update KPI cards
+
+            document.getElementById('strength-count').textContent = strengths;
+
+            document.getElementById('threat-count').textContent = threats;
+
+            document.getElementById('opportunity-count').textContent = opportunities;
+
+
+
+            // Normalization: Max count determines the max radar value (e.g., 100)
+
+            const maxCount = Math.max(strengths, weaknesses, opportunities, threats, 10); // Use 10 as a base max if counts are low
+
+            
+
+            const data = [
+
+                (strengths / maxCount) * 100,
+
+                (weaknesses / maxCount) * 100,
+
+                (opportunities / maxCount) * 100,
+
+                (threats / maxCount) * 100,
+
+            ];
+
+            
+
+            return { data, maxCount };
+
+        }
+
+
+
+        function initSwotChart() {
+
+            const ctx = document.getElementById('swotChart').getContext('2d');
+
+            const isDark = htmlElement.classList.contains('dark');
+
+            const colors = getChartColors(isDark);
+
+            
+
+            const initialSwotData = [0, 0, 0, 0]; 
+
+            const specificColors = [colors.strength, colors.weakness, colors.opportunity, colors.threat];
+
+
+
+            if (swotChartInstance) swotChartInstance.destroy();
+
+
+
+            swotChartInstance = new Chart(ctx, {
+
+                type: 'radar',
+
+                data: {
+
+                    labels: ['Strengths', 'Weaknesses', 'Opportunities', 'Threats'],
+
+                    datasets: [{
+
+                        label: 'Item Count (Normalized)',
+
+                        data: initialSwotData,
+
+                        backgroundColor: specificColors.map(c => c.replace(/0\.8\)$|0\.6\)$/, '0.3)')), // Lighter fill
+
+                        borderColor: specificColors,
+
+                        pointBackgroundColor: specificColors,
+
+                        pointBorderColor: isDark ? colors['dark-card'] : colors['light-card'],
+
+                        borderWidth: 2,
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    scales: {
+
+                        r: {
+
+                            angleLines: { color: colors.grid },
+
+                            grid: { color: colors.grid, lineWidth: 1 },
+
+                            pointLabels: { color: colors.text, font: { size: 12, weight: '600' } },
+
+                            min: 0,
+
+                            max: 100, 
+
+                            ticks: { display: false }
+
+                        }
+
+                    },
+
+                    plugins: { 
+
+                        legend: { display: false },
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label: (context) => {
+
+                                    const rawScore = calculateSwotScores().data[context.dataIndex];
+
+                                    const rawCount = document.getElementById(`swot-${context.label.toLowerCase()}-input`).value.trim().split('\n').filter(line => line.trim() !== '').length;
+
+                                    return `${context.label}: ${rawCount} Items (${rawScore.toFixed(0)}%)`;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+        
+
+        function recalculateSwotChart() {
+
+            const { data } = calculateSwotScores();
+
+
+
+            if (swotChartInstance) {
+
+                // Update the chart data
+
+                swotChartInstance.data.datasets[0].data = data;
+
+                
+
+                // Get new colors if theme changed
+
+                const isDark = htmlElement.classList.contains('dark');
+
+                const colors = getChartColors(isDark);
+
+                const specificColors = [colors.strength, colors.weakness, colors.opportunity, colors.threat];
+
+                
+
+                swotChartInstance.data.datasets[0].backgroundColor = specificColors.map(c => c.replace(/0\.8\)$|0\.6\)$/, '0.3)'));
+
+                swotChartInstance.data.datasets[0].borderColor = specificColors;
+
+                swotChartInstance.data.datasets[0].pointBackgroundColor = specificColors;
+
+
+
+                swotChartInstance.update();
+
+            } else {
+
+                initSwotChart();
+
+                recalculateSwotChart(); 
+
+            }
+
+        }
+
+
+
+        // --- DATA CONSOLE LOGIC ---
+
+
+
+        function processData() {
+
+            const type = document.getElementById('analysisType').value;
+
+            // Split inputs by new line and filter out empty lines
+
+            const labels = document.getElementById('labelsInput').value.trim().split('\n').filter(i => i.trim() !== '');
+
+            const valuesRaw = document.getElementById('valuesInput').value.trim().split('\n').filter(i => i.trim() !== '');
+
+            
+
+            if (labels.length === 0 || valuesRaw.length === 0 || labels.length !== valuesRaw.length) {
+
+                 document.getElementById('dynamicChartTitle').innerText = "ERROR: Please enter matching non-empty categories and scores (one per line).";
+
+                 if(dynamicChartInstance) dynamicChartInstance.destroy();
+
+                 return;
+
+            }
+
+
+
+            const data = valuesRaw.map(v => parseFloat(v)).map(v => isNaN(v) ? 0 : v);
+
+
+
+            if(dynamicChartInstance) dynamicChartInstance.destroy(); // Destroy previous instance
+
+            
+
+            const ctx = document.getElementById('dynamicChart').getContext('2d');
+
+            const isDark = htmlElement.classList.contains('dark');
+
+            const colors = getChartColors(isDark);
+
+            
+
+            // Color array for distribution charts (Pie/Polar)
+
+            const bgColors = [colors.primary, '#10b981', '#f59e0b', '#ef4444', '#3b82f6', '#8b5cf6'];
+
+            const borderColors = isDark ? colors['dark-card'] : colors['light-card'];
+
+
+
+            let chartConfig = {
+
+                type: type,
+
+                data: {
+
+                    labels: labels,
+
+                    datasets: [{
+
+                        label: 'Analysis Value',
+
+                        data: data,
+
+                        backgroundColor: (type === 'pie' || type === 'polarArea') ? bgColors : colors.primaryBg,
+
+                        borderColor: (type === 'pie' || type === 'polarArea') ? borderColors : colors.primary,
+
+                        borderWidth: (type === 'pie' || type === 'polarArea') ? 1 : 2,
+
+                        fill: type === 'radar' ? true : false, 
+
+                        hoverOffset: (type === 'pie' || type === 'polarArea') ? 8 : 0
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: { 
+
+                            display: (type === 'pie' || type === 'polarArea'), 
+
+                            position: 'right',
+
+                            labels: { color: colors.text } 
+
+                        }
+
+                    }
+
+                }
+
+            };
+
+
+
+            // Scale configurations
+
+            if (type !== 'pie' && type !== 'polarArea') {
+
+                chartConfig.options.scales = {
+
+                    y: { 
+
+                        grid: { color: colors.grid }, 
+
+                        ticks: { color: colors.text, beginAtZero: true },
+
+                        min: 0,
+
+                        max: 100 
+
+                    },
+
+                    x: { 
+
+                        grid: { display: false }, 
+
+                        ticks: { color: colors.text } 
+
+                    }
+
+                };
+
+            }
+
+            if (type === 'radar') {
+
+                chartConfig.options.scales = {
+
+                    r: {
+
+                        angleLines: { color: colors.grid },
+
+                        grid: { color: colors.grid },
+
+                        pointLabels: { color: colors.text },
+
+                        min: 0,
+
+                        max: 100, 
+
+                        ticks: { display: false }
+
+                    }
+
+                };
+
+            }
+
+
+
+            dynamicChartInstance = new Chart(ctx, chartConfig);
+
+            document.getElementById('dynamicChartTitle').innerText = "Generated: " + type.charAt(0).toUpperCase() + type.slice(1) + " Chart";
+
+        }
+
+
+
+        function clearData() {
+
+            document.getElementById('labelsInput').value = "";
+
+            document.getElementById('valuesInput').value = "";
+
+            if(dynamicChartInstance) dynamicChartInstance.destroy();
+
+            document.getElementById('dynamicChartTitle').innerText = "Analysis Output";
+
+            document.getElementById('labelsInput').placeholder = "Metric A\nMetric B\nMetric C";
+
+            document.getElementById('valuesInput').placeholder = "50\n75\n25";
+
+        }
+
+
+
+        // Function to re-render charts when theme changes
+
+        function updateAllChartsTheme() {
+
+            // Re-initialize SWOT chart to reset colors
+
+            initSwotChart();
+
+            recalculateSwotChart(); 
+
+
+
+            if(dynamicChartInstance) {
+
+                // Re-process to update the colors of the dynamic chart
+
+                processData(); 
+
+            }
+
+        }
+
+
+
+        // Initial setup on load
+
+        window.addEventListener('load', () => {
+
+            initSwotChart();
+
+            recalculateSwotChart(); // Calculate initial counts (which should be 0)
+
+
+
+            // Pre-fill console with mock data
+
+            document.getElementById('labelsInput').value = "Market Size\nCompetitive Edge\nTeam Experience";
+
+            document.getElementById('valuesInput').value = "90\n45\n70";
+
+            processData(); 
+
+            
+
+            // Set initial placeholders for SWOT to guide the user
+
+            document.getElementById('swot-strengths-input').value = "Strong brand loyalty\nEfficient supply chain\nUnique patent portfolio";
+
+            document.getElementById('swot-weaknesses-input').value = "High operating costs\nLimited online presence";
+
+            document.getElementById('swot-opportunities-input').value = "Entering new international markets\nEmerging technology adoption";
+
+            document.getElementById('swot-threats-input').value = "New disruptive competitor\nIncreased regulatory scrutiny";
+
+            
+
+            // Recalculate SWOT with pre-filled data
+
+            recalculateSwotChart();
+
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>

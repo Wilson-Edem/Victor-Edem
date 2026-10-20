@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Source Code | Victor Edem</title>
+    <meta name="description" content="Read-only source code view.">
+    <link rel="icon" href="assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { sans: ["Inter", "sans-serif"] }, colors: { dark: "#07080d", "dark-card": "#11141e", light: "#f6f7fb", "light-card": "#ffffff" } } } }</script>
+    <script src="https://unpkg.com/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="bg-light dark:bg-dark text-slate-800 dark:text-gray-200 font-sans antialiased min-h-screen transition-colors duration-300">
+    <nav class="glass-nav fixed top-0 w-full z-50">
+        <div class="max-w-6xl mx-auto px-5 md:px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-xl md:text-2xl font-bold gradient-text tracking-tight">VICTOR EDEM</a>
+            <button class="theme-toggle p-2 rounded-full text-slate-600 dark:text-gray-400 glass" type="button" aria-label="Toggle dark mode">
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </nav>
+    <main class="max-w-5xl mx-auto px-5 md:px-6 pt-28 md:pt-32 pb-24">
+        <a href="index.html#projects" class="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 dark:text-indigo-400 mb-6"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to projects</a>
+        <h1 id="source-title" class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">Source code</h1>
+        <p id="source-status" class="text-slate-500 dark:text-gray-500 mb-6">Loading...</p>
+        <pre class="glass rounded-2xl p-4 sm:p-6 overflow-auto max-h-[70vh] text-xs leading-relaxed whitespace-pre"><code id="source-code"></code></pre>
+    </main>
+    <script src="js/theme-only.js"></script>
+    <script src="js/source-view.js"></script>
+    <script src="js/visit.js"></script>
+    <script>document.addEventListener("DOMContentLoaded",function(){if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

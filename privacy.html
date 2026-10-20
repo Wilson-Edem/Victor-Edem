@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Privacy Policy | Victor Edem</title>
+    <meta name="description" content="How this portfolio handles visitor and contact information.">
+    <link rel="icon" href="assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { sans: ["Inter", "sans-serif"] }, colors: { dark: "#07080d", "dark-card": "#11141e", light: "#f6f7fb", "light-card": "#ffffff" } } } }</script>
+    <script src="https://unpkg.com/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="bg-light dark:bg-dark text-slate-800 dark:text-gray-200 font-sans antialiased min-h-screen transition-colors duration-300">
+    <nav class="glass-nav fixed top-0 w-full z-50">
+        <div class="max-w-6xl mx-auto px-5 md:px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-xl md:text-2xl font-bold gradient-text tracking-tight">VICTOR EDEM</a>
+            <button class="theme-toggle p-2 rounded-full text-slate-600 dark:text-gray-400 glass" type="button" aria-label="Toggle dark mode">
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </nav>
+    <main class="max-w-3xl mx-auto px-5 md:px-6 pt-28 md:pt-32 pb-24 space-y-6 text-slate-600 dark:text-gray-400 leading-relaxed">
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">Privacy Policy</h1>
+        <p class="text-sm text-slate-500 dark:text-gray-500">Last updated: October 2026</p>
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white pt-4">What this site collects</h2>
+        <p><strong class="text-slate-900 dark:text-white">Contact form:</strong> when you send a message, I receive your name, email address, and message so I can reply. The message is delivered by email through Brevo.</p>
+        <p><strong class="text-slate-900 dark:text-white">Visit information:</strong> the first time you visit each day, the site records the date and time, the page you opened, your IP address, your browser and device type, and the page that referred you.</p>
+        <p><strong class="text-slate-900 dark:text-white">Cookies and local storage:</strong> the site sets a cookie named pv_day so the visit record is only sent once per day. It also saves your light or dark theme choice in your browser. These stay on your device.</p>
+        <p><strong class="text-slate-900 dark:text-white">Analytics:</strong> the site uses Vercel Analytics to count page views.</p>
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white pt-4">How long I keep it</h2>
+        <p>Contact messages are kept as long as needed to reply and follow up. Visit records are kept in my email inbox and are not shared.</p>
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white pt-4">Sharing</h2>
+        <p>I do not sell or share your information. Brevo and Vercel process the data on my behalf to send emails and host the site.</p>
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white pt-4">Your choices</h2>
+        <p>You can clear cookies and local storage in your browser at any time. To ask about or delete information you sent me, email <a href="mailto:edsonedem2121@gmail.com" class="text-indigo-600 dark:text-indigo-400 underline">edsonedem2121@gmail.com</a>.</p>
+    </main>
+    <script src="js/theme-only.js"></script>
+    <script src="js/visit.js"></script>
+    <script>document.addEventListener("DOMContentLoaded",function(){if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>
