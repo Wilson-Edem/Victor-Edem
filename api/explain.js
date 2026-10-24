@@ -12,10 +12,12 @@ function visitorKey(req) {
 }
 
 async function redis(command) {
-  const response = await fetch(process.env.UPSTASH_REDIS_REST_URL, {
+  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.UPSTASH_REDIS_KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.UPSTASH_REDIS_KV_REST_API_TOKEN;
+  const response = await fetch(url, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(command),
