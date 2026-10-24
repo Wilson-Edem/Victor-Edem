@@ -22,7 +22,10 @@ async function redis(command) {
     },
     body: JSON.stringify(command),
   });
-  if (!response.ok) throw new Error("usage store unavailable");
+    if (!response.ok) {
+    console.error("Gemini error", response.status, await response.text());
+    throw new Error("AI service is unavailable right now");
+  }
   return (await response.json()).result;
 }
 
