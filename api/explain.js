@@ -69,6 +69,7 @@ function buildPrompt({ rule, message, snippet }) {
 }
 
 async function askGemini(body) {
+async function askGemini(body) {
   const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
@@ -81,13 +82,19 @@ async function askGemini(body) {
       body: JSON.stringify({ contents: [{ parts: [{ text: buildPrompt(body) }] }] }),
     }
   );
-  if (!response.ok) throw new Error("AI service is unavailable right now");
-  const data = await response.json();
+
+  const raw = await response.text();
+  if (!response.ok) {
+    throw new Error(`Gemini ${response.status}: ${raw.slice(0, 300)}`);
+  }
+
+  const data = JSON.parse(raw);
   const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) throw new Error("AI service returned no explanation");
+  if (!text) {
+    throw new Error(`Gemini returned no text: ${raw.slice(0, 300)}`);
+  }
   return text.trim();
 }
-
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Use POST" });
