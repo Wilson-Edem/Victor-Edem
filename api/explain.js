@@ -22,10 +22,7 @@ async function redis(command) {
     },
     body: JSON.stringify(command),
   });
-    if (!response.ok) {
-    console.error("Gemini error", response.status, await response.text());
-    throw new Error("AI service is unavailable right now");
-  }
+  if (!response.ok) throw new Error("usage store unavailable");
   return (await response.json()).result;
 }
 
@@ -69,7 +66,6 @@ function buildPrompt({ rule, message, snippet }) {
 }
 
 async function askGemini(body) {
-async function askGemini(body) {
   const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
@@ -95,6 +91,7 @@ async function askGemini(body) {
   }
   return text.trim();
 }
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Use POST" });
