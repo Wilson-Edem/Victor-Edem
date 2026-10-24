@@ -65,8 +65,7 @@ function buildPrompt({ rule, message, snippet }) {
   ].join("\n");
 }
 
-async function askGemini(body) {
-  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+async function callModel(model, body) {
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
     {
@@ -81,7 +80,9 @@ async function askGemini(body) {
 
   const raw = await response.text();
   if (!response.ok) {
-    throw new Error(`Gemini ${response.status}: ${raw.slice(0, 300)}`);
+    const error = new Error(`Gemini ${response.status}: ${raw.slice(0, 300)}`);
+    error.status = response.status;
+    throw error;
   }
 
   const data = JSON.parse(raw);
@@ -90,6 +91,19 @@ async function askGemini(body) {
     throw new Error(`Gemini returned no text: ${raw.slice(0, 300)}`);
   }
   return text.trim();
+}
+
+async function askGemini(body) {
+  const primary = process.env.GEMINI_MODEL || "gemini-flash-latest";
+  const fallback = process.env.GEMINI_FALLBACK_MODEL || "gemini-flash-lite-latest";
+
+  try {
+    return await callModel(primary, body);
+  } catch (error) {
+    const retryable = error.status === 404 || error.status === 429 || error.status === 503;
+    if (!retryable || fallback === primary) throw error;
+    return await callModel(fallback, body);
+  }
 }
 
 module.exports = async function handler(req, res) {
